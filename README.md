@@ -1,91 +1,57 @@
+# Smart Farming Decision Support System
 
-🌱 Smart Farming Decision Support System
+This project recommends a suitable crop and fertilizer plan from soil, weather, and location inputs using a machine learning pipeline with a Flask web interface.
 
-A Machine Learning-based web application that helps farmers identify the most suitable crop and recommends the appropriate fertilizer based on soil nutrients, weather conditions, and location. The system uses a Random Forest Classifier to provide accurate crop recommendations through a user-friendly Flask web interface.
+## Core features
 
-📌 Features
-🌾 Crop Recommendation using Machine Learning
-🌱 Fertilizer Recommendation
-🌍 Region & State Selection
-🌦️ Weather and Soil Parameter Analysis
-📊 High Prediction Accuracy (96.09%)
-💻 Responsive Web Interface
-🔗 JSON Prediction API
-📈 Model Evaluation Reports
-🛠 Technology Stack
+- Crop recommendation using a Random Forest classifier
+- Feature preprocessing and selection before classification
+- Fertilizer suggestion based on nutrient balance and crop profile rules
+- Responsive Flask interface for manual field input
+- JSON API endpoint for programmatic predictions
 
-📂 Project Structure
+## Project structure
 
-Smart-Farming-Decision-Support-System/
-│
-├── app.py
-├── requirements.txt
-├── data/
-├── docs/
-├── models/
-├── reports/
-├── scripts/
-├── src/
-├── static/
-├── templates/
-└── README.md
+- `src/generate_dataset.py` creates the crop recommendation dataset
+- `src/train_model.py` trains and evaluates the model
+- `app.py` runs the Flask application
+- `data/` stores the prepared dataset
+- `models/` stores the trained pipeline and metrics
+- `reports/` stores evaluation artifacts and the written project report
 
-⚙️ Installation
-1. Clone the Repository
-git clone https://github.com/ArshiyaNasirin/farming.git
-2. Navigate to Project
-cd farming
-3. Install Dependencies
-pip install -r requirements.txt
-4. Run the Application
-python app.py
-5. Open Browser
-http://127.0.0.1:5000
+## How to run
 
-🚀 How It Works
-Enter soil and weather details.
-Click Predict.
-The Flask backend processes the input.
-The Random Forest model predicts the most suitable crop.
-The system recommends the appropriate fertilizer.
-Results are displayed on the web interface.
+1. Install dependencies:
 
-📊 Machine Learning Model
-Algorithm: Random Forest Classifier
-Dataset Size: 1,920 Records
-Crop Classes: 16
-Training Accuracy: 96.09%
-Cross Validation: 95.25%
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-📥 Input Parameters
-Nitrogen (N)
-Phosphorus (P)
-Potassium (K)
-Temperature
-Humidity
-Rainfall
-Soil Type
-Region
-State
-Season
-Irrigation Method
+2. Generate the dataset:
 
-📤 Output
-Recommended Crop
-Fertilizer Suggestion
-Prediction Confidence
+   ```bash
+   python src/generate_dataset.py
+   ```
 
-📈 Model Performance
-Metric	Value
-Accuracy	96.09%
-Precision	96.42%
-Recall	96.09%
-F1-Score	96.12%
-Cross Validation	95.25%
+3. Train and evaluate the model:
 
-This project was developed during the Technical Training Program under the guidance of the project mentor and Mr. Manoj Sir (R-Sequence Organization). I sincerely thank them for their continuous support, valuable guidance, and encouragement throughout the successful completion of this project.
+   ```bash
+   python src/train_model.py
+   ```
 
-📄 License
+4. Start the web app:
 
-This project is developed for educational and academic purposes.
+   ```bash
+   python app.py
+   ```
 
+5. Open http://127.0.0.1:5000 in a browser.
+
+## Outputs
+
+- Dataset: `data/crop_recommendation_dataset.csv`
+- Trained model: `models/crop_recommender_pipeline.joblib`
+- Metrics: `models/training_metrics.json`
+- Feature importance plot: `reports/feature_importance.png`
+- Confusion matrix plot: `reports/confusion_matrix.png`
+- Project report: `reports/SmartFarmingDecisionSupportSystem_Report.md`
