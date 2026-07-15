@@ -59,6 +59,9 @@ Results are displayed on the web interface.
 5. Open  http://127.0.0.1:5000 in a browser.
 
 📤 Output
+
 Recommended Crop
+
 Fertilizer Suggestion
+
 Prediction Confidence
