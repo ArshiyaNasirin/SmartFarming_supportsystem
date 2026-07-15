@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="result-hero">
+  <article class="result-card primary panel">
+    <p class="eyebrow">Recommended crop</p>
+    <h1>{{ result.predicted_crop|title }}</h1>
+    <div class="result-badges">
+      <span class="badge">Confidence {{ result.confidence_pct }}%</span>
+      <span class="badge">Validated model</span>
+    </div>
+    <p>The model found the strongest alignment between the supplied soil, weather, and location conditions and the crop profile for {{ result.predicted_crop|title }}.</p>
+  </article>
+
+  <article class="result-card panel">
+    <p class="eyebrow">Suggested fertilizer</p>
+    <h2>{{ result.fertilizer }}</h2>
+    <p>Base crop plan: {{ result.crop_profile.base_fertilizer }}.</p>
+    <p>This recommendation is adjusted from the observed nutrient and management inputs.</p>
+  </article>
+</section>
+
+<section class="results-grid">
+  <article class="result-card panel">
+    <h3>Top alternatives</h3>
+    <ul class="rank-list">
+      {% for item in result.top_predictions %}
+      <li>
+        <div class="rank-labels">
+          <span>{{ item.crop|title }}</span>
+          <strong>{{ item.confidence_pct }}%</strong>
+        </div>
+        <div class="meter"><span style="width: {{ item.confidence_pct }}%;"></span></div>
+      </li>
+      {% endfor %}
+    </ul>
+  </article>
+
+  <article class="result-card panel">
+    <h3>What matched</h3>
+    <ul class="bullet-list">
+      {% for item in result.matched_conditions %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+
+  <article class="result-card panel caution-card">
+    <h3>Attention points</h3>
+    <ul class="bullet-list">
+      {% for item in result.caution_conditions %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+
+  <article class="result-card panel">
+    <h3>Input summary</h3>
+    <dl class="summary-grid">
+      {% for key, value in result.input_values.items() %}
+      <div>
+        <dt>{{ key|replace('_', ' ')|title }}</dt>
+        <dd>{{ value }}</dd>
+      </div>
+      {% endfor %}
+    </dl>
+  </article>
+</section>
+
+<div class="result-actions">
+  <a class="primary-button" href="{{ url_for('index') }}">Run another analysis</a>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+              precision    recall  f1-score   support
+
+       apple       1.00      1.00      1.00        24
+      banana       1.00      0.92      0.96        24
+   blackgram       1.00      0.96      0.98        24
+    chickpea       0.88      0.88      0.88        24
+      cotton       0.96      1.00      0.98        24
+   groundnut       1.00      0.88      0.93        24
+        jute       0.96      1.00      0.98        24
+ kidneybeans       0.92      0.96      0.94        24
+      lentil       0.96      0.92      0.94        24
+       maize       1.00      1.00      1.00        24
+    mungbean       1.00      0.96      0.98        24
+   pigeonpea       0.82      0.96      0.88        24
+      potato       1.00      1.00      1.00        24
+        rice       1.00      0.96      0.98        24
+   sugarcane       0.92      1.00      0.96        24
+       wheat       1.00      1.00      1.00        24
+
+    accuracy                           0.96       384
+   macro avg       0.96      0.96      0.96       384
+weighted avg       0.96      0.96      0.96       384

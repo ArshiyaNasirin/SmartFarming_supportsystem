@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-grid">
+  <div class="hero-copy">
+    <p class="eyebrow">Crop intelligence platform</p>
+    <h1>Predict the most suitable crop and fertilizer plan from field conditions.</h1>
+    <p class="lead">The system combines soil nutrients, weather patterns, and location context to recommend a crop with a fertilizer suggestion that remains logically aligned with the input conditions.</p>
+
+    <div class="hero-highlights">
+      <article class="highlight-card panel">
+        <span class="label">Model</span>
+        <strong>Random Forest</strong>
+        <small>Selected because it handles mixed feature types and nonlinear agronomic relationships.</small>
+      </article>
+      <article class="highlight-card panel">
+        <span class="label">Training data</span>
+        <strong>{{ model_stats.records }} records</strong>
+        <small>{{ model_stats.classes }} crop classes captured across soil and climate conditions.</small>
+      </article>
+      <article class="highlight-card panel">
+        <span class="label">Validation</span>
+        <strong>{{ (model_stats.accuracy * 100) | round(1) }}%</strong>
+        <small>Weighted performance on the held-out test split.</small>
+      </article>
+    </div>
+  </div>
+
+  <div class="panel predictor-panel" id="predictor">
+    {% if error_message %}
+    <div class="alert-banner">{{ error_message }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('predict') }}" class="predictor-form">
+      {% for group in form_groups %}
+      <section class="form-section">
+        <div class="section-heading">
+          <h2>{{ group.title }}</h2>
+          <p>{{ group.description }}</p>
+        </div>
+        <div class="form-grid">
+          {% for field_name in group.fields %}
+            {% set field = field_definitions[field_name] %}
+            <label class="field">
+              <span>{{ field.label }}</span>
+              {% if field.kind == 'number' %}
+              <input
+                type="number"
+                name="{{ field_name }}"
+                value="{{ form_values[field_name] }}"
+                min="{{ field.min }}"
+                max="{{ field.max }}"
+                step="{{ field.step }}"
+                required>
+              {% else %}
+              <select
+                name="{{ field_name }}"
+                {% if field_name == 'region' %}data-region-select{% endif %}
+                {% if field_name == 'state' %}data-state-select{% endif %}>
+                {% for option in field.options %}
+                <option value="{{ option }}" {% if form_values[field_name] == option %}selected{% endif %}>
+                  {{ option|replace('_', ' ')|title }}
+                </option>
+                {% endfor %}
+              </select>
+              {% endif %}
+              {% if field.unit %}
+              <small>{{ field.unit }}</small>
+              {% endif %}
+            </label>
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+
+      <button class="primary-button" type="submit">Generate recommendation</button>
+    </form>
+  </div>
+</section>
+
+<section class="insight-strip" id="insights">
+  <article class="insight-card panel">
+    <span class="label">Feature selection</span>
+    <h3>Relevant variables are retained before classification.</h3>
+    <p>The pipeline keeps the most informative encoded and numeric features so the model stays compact and focused.</p>
+  </article>
+  <article class="insight-card panel">
+    <span class="label">Output</span>
+    <h3>Crop choice plus fertilizer guidance.</h3>
+    <p>The response includes the recommended crop, a fertilizer plan, and condition checks that explain the recommendation.</p>
+  </article>
+  <article class="insight-card panel">
+    <span class="label">Interface</span>
+    <h3>Responsive and presentation-ready.</h3>
+    <p>The form adapts to desktop and mobile layouts with a clean visual hierarchy and practical field grouping.</p>
+  </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.REGION_STATE_MAP = {{ region_state_map | tojson }};
+</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

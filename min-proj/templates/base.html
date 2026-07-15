@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or 'Smart Farming Decision Support System' }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="site-shell">
+    <header class="topbar panel">
+      <a class="brand" href="{{ url_for('index') }}">
+        <span class="brand-mark">SF</span>
+        <span class="brand-copy">
+          <strong>Smart Farming</strong>
+          <small>Decision support for crops and fertilizers</small>
+        </span>
+      </a>
+      <nav class="topbar-nav">
+        <a href="#insights">Insights</a>
+        <a href="#predictor">Predictor</a>
+      </nav>
+    </header>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+      <p>Built for soil-aware crop guidance, fertilizer planning, and practical farm decisions.</p>
+    </footer>
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
